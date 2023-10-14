@@ -2,6 +2,14 @@
 - hosts: all
   become: true
   tasks:
+  - name: Update the indexes
+    apt:
+      update_cache: yes
   - name: First web server on all webbie servers
     apt:
       name: apache2
+      state: latest
+  - name: PHP Support for apache2
+    apt:
+      name: libapache2-mod-php
+      state: latest
