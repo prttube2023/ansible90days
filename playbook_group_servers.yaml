@@ -1,0 +1,36 @@
+# we are now grouping servers based on the roles
+# e.g. webbie, debbie or appie servers, in order to achieve this,
+# you will need to modified inventory file
+
+---
+- hosts: all
+  become: true
+  pre_tasks:
+    - name: Update Ubuntu distribution
+      when: ansible_distribution == "Ubuntu"
+      apt:
+        update_cache: yes
+        upgrade: dist
+    - name: Update Centos distribution
+      when: ansible_distribution == "CentOS"
+      dnf:
+        update_cache: yes
+        update_only: yes
+# now install the role based on the requirements
+- hosts: webbies
+  become: true
+  tasks:
+    - name: Install apache and php on Ubuntu servers
+      when: ansible_distribution == "Ubuntu"
+      apt:
+        name:
+          - apache2
+          - libapache2-mod-php
+        state: latest
+    - name: Install apache and php on CentOS
+      when: ansible_distribution == "CentOS"
+      dnf:
+        name:
+          - httpd
+          - php
+        state: latest

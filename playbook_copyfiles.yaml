@@ -1,0 +1,31 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: update all Ubuntu systems
+      when: ansible_distribution == "Ubuntu"
+      apt:
+        update_cache: yes
+        upgrade: dist
+- hosts: webbies
+  become: true
+  tasks:
+    - name: install apache2 and php on all Ubuntu
+      when: ansible_distribution == "Ubuntu"
+      apt:
+        name:
+        - apache2
+        - libapache2-mod-php
+        state: latest
+    - name: copy file to the web servers
+      copy:
+        src: index.html
+        dest: /var/www/html/index.html
+        owner: root
+        group: root
+        mode: 0644
+        
+
+
+
+

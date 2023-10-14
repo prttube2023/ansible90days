@@ -1,1 +1,4 @@
-192.168.50.129 apache_pkg=apache2 php_pkg=libapache2-mod-php
+[webbies]
+192.168.50.129
+[debbies]
+192.168.50.115
