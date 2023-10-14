@@ -23,3 +23,6 @@ ansible all -m apt -a "name=fortune-mode state=latest" --become --ask-become-pas
 ansible all -m apt -a "autoremove=true" --become --ask-become-pass
 # upgrade all packages on all hosts in the inventory
 ansible all -m apt -a "upgrade=dist" --become --ask-become-pass
+# run a playbook playbook_install_apache
+ansible-playbook -K playbook_install_apache.yaml
+# K (capital) --ask-become-pass
