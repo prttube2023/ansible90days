@@ -1,15 +1,29 @@
+# ------ something about when ------------- #
+# when ansible_distribution == "Ubuntu" (where do you get these variables)
+# ansible all -m gather_facts | grep distribution
+#        "ansible_distribution": "Ubuntu",
+#        "ansible_distribution_file_parsed": true,
+#        "ansible_distribution_file_path": "/etc/os-release",
+#        "ansible_distribution_file_variety": "Debian",
+#        "ansible_distribution_major_version": "22",
+#        "ansible_distribution_release": "jammy",
+#        "ansible_distribution_version": "22.04",
+# in this case, the when statement can when: ansible_distribution == "Ubuntu" and ansible_distribution_version == "22.05"
 ---
 - hosts: all
   become: true
   tasks:
   - name: Update the indexes
+    when: ansible_distribution == "Ubuntu"
     apt:
       update_cache: yes
   - name: First web server on all webbie servers
+    when: ansible_distribution == "Ubuntu"
     apt:
       name: apache2
       state: latest
   - name: PHP Support for apache2
+    when: ansible_distribution == "Ubuntu"
     apt:
       name: libapache2-mod-php
       state: latest

@@ -3,10 +3,12 @@
   become: true
   tasks:
     - name: uninstall apache from the server
+      when: ansible_distribution == "Ubuntu"
       apt:
         name: apache2
         state: absent
     - name: uninstall PHP support for apache
+      when: ansible_distribution == "Ubuntu"
       apt:
         name: libapache2-mod-php
         state: absent
