@@ -1,0 +1,13 @@
+# this a version which uses variables and module name package instead of apt
+# this allow us to use this playbook on linux distribution
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: Install apache and PHP
+      package:
+        name:
+          - "{{ apache_pkg }}"
+          - "{{ php_pkg }}"
+        state: latest
+        update_cache: yes

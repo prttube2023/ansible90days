@@ -1,0 +1,13 @@
+# we are consolidating the playbook playbook_install_apache.yaml
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: install apache and php support for apache
+    when: ansible_distribution == "Ubuntu"
+    apt:
+      name:
+        - apache2
+        - libapache2-mod-php
+      update_cache: yes
+      state: latest
