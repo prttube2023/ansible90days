@@ -1,0 +1,7 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: First web server on all webbie servers
+    apt:
+      name: apache2
