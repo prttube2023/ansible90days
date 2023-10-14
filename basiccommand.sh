@@ -10,3 +10,16 @@ ansible all -m ping
 ansible all -m gather_facts
 # facts gathered for single host
 ansible all -m gather_facts --limit 192.168.50.129
+# now lets update the package index on all servers in the inventory
+ansible all -m apt -a update_cache=true
+# -a is for argument
+# but become user is required
+ansible all -m apt -a update_cache=true --become --ask-become-pass
+# update_cache can be true(yes) or false(no).
+ansible all -m apt -a name=fortune-mod --become --ask-become-pass
+# to upgrade the specific package
+ansible all -m apt -a "name=fortune-mode state=latest" --become --ask-become-pass
+# notice state=latest
+ansible all -m apt -a "autoremove=true" --become --ask-become-pass
+# upgrade all packages on all hosts in the inventory
+ansible all -m apt -a "upgrade=dist" --become --ask-become-pass
