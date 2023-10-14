@@ -1,0 +1,12 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: uninstall apache from the server
+      apt:
+        name: apache2
+        state: absent
+    - name: uninstall PHP support for apache
+      apt:
+        name: libapache2-mod-php
+        state: absent
