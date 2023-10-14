@@ -24,8 +24,33 @@
         owner: root
         group: root
         mode: 0644
-        
+# service management is not required for Apache2 because service 
+# is started and enabled by in ubuntu but it is mentioned here for reference
+    - name: start and enable service
+      service:
+        name: apache2
+        state: started
+        enabled: yes
+# restart apache2 service when something is changed e.g. we change the timeout
+    - name: change the timeout from 300 to 600 seconds
+      lineinfile:
+        path: /etc/apache2/apache2.conf
+        regexp: '^Timeout'
+        line: Timeout 600
+      register: httpstate
+    - name: restart the apache2 service
+      when: httpstate.changed
+      service:
+        name: apache2
+        state: restarted
+      register: servicestatus
+    - name: print if the service has restarted
+      ansible.builtin.debug:
+        # var: servicestatus
+        msg: "{{ servicestatus['changed'] }}"
 
+# reference:
+  # - https://ostechnix.com/ansible-register/
 
 
 
