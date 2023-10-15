@@ -1,8 +1,8 @@
 - name: install apache and php modules
   apt:
     name:
-    - apache2
-    - libapache2-mod-php
+    - "{{ apache_pkgn }}"
+    - "{{ php_pkgn }}"
     state: latest
 - name: change the default html file
   copy:
@@ -13,21 +13,29 @@
    mode: 0644
 - name: enable and start the service (does not apply for Ubuntu)
   service:
-    name: apache2
-    state: started
-    enabled: yes
+    name: "{{ apache_svc }}"
+    state: "{{ apache_svc_st }}"
+    enabled: "{{ apache_svc_act }}"
+# - name: change the apache config file
+#   lineinfile:
+#     path: /etc/apache2/apache2.conf
+#     regexp: '^Timeout'
+#     line: Timeout 600
+#   register: httpstate
+# lets use notify instead of register.
 - name: change the apache config file
   lineinfile:
     path: /etc/apache2/apache2.conf
     regexp: '^Timeout'
-    line: Timeout 600
-  register: httpstate
-- name: restart the apache service
-  when: httpstate.changed
-  service:
-    name: apache2
-    state: restarted
-  register: servicestatus
-- name: print the service status
-  ansible.builtin.debug:
-    var: servicestatus
+    line: Timeout 300
+  notify: restart_apache
+# need to think on how to use notify status to print
+# - name: restart the apache service
+#   when: httpstate.changed
+#   service:
+#     name: apache2
+#     state: restarted
+#   register: servicestatus
+# - name: print the service status
+#   ansible.builtin.debug:
+#     var: restart_apache

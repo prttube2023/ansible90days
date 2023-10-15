@@ -1,0 +1,5 @@
+apache_pkgn: apache2
+apache_svc: apache2
+apache_svc_st: started
+apache_svc_act: yes
+php_pkgn: libapache2-mod-php
