@@ -1,0 +1,20 @@
+# Purpose: it is 3rd version of the playbook but based on the roles.
+---
+- hosts: all
+  become: true
+  pre_tasks:
+    - name: update the index of the repo
+      apt:
+        update_cache: yes
+      changed_when: false
+
+- hosts: all
+  become: true
+  roles:
+   - basicsetup
+
+- hosts: webbies
+  become: true
+  roles:
+    - webservers
+    
