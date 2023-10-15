@@ -27,7 +27,7 @@
   lineinfile:
     path: /etc/apache2/apache2.conf
     regexp: '^Timeout'
-    line: Timeout 300
+    line: Timeout 600
   notify: restart_apache
 # need to think on how to use notify status to print
 # - name: restart the apache service
