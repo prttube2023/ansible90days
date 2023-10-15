@@ -1,0 +1,42 @@
+# Purpose:
+  # - install apache, php role
+  # - restart service when things change
+  # - start service (this is not required for ubuntu)
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: install apache and php modules
+      apt:
+        update_cache: yes
+        name:
+          - apache2
+          - libapache2-mod-php
+        state: latest
+    - name: copy html file
+      copy:
+        src: index.html
+        dest: /var/www/html/index.html
+        owner: root
+        group: root
+        mode: 0644
+    - name: start and enable services
+      service:
+        name: apache2
+        state: started
+        enabled: yes
+    - name: change the config of apache server
+      lineinfile:
+        path: /etc/apache2/apache2.conf
+        regexp: '^Timeout'
+        line: Timeout 600
+      register: httpstate
+    - name: Restart apache after config change
+      when: httpstate.changed
+      service:
+        name: apache2
+        state: restarted
+      register: servicestatus
+    - name: Print service status
+      ansible.builtin.debug:
+        var: servicestatus
