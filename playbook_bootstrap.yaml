@@ -1,0 +1,29 @@
+# Purpose: This is basically plain playbook to make server read for other roles.
+  #   in other words, this playbook is valid for all servers irrespective of roles.
+---
+- hosts: all
+  become: true
+  pre_tasks:
+  - name: update and upgrade the server (if required)
+    apt:
+      update_cache: yes
+      upgrade: dist
+  tasks:
+    - name: create a user
+      user:
+        name: ttytsdeur
+        comment: "2800 Euro"
+        group: adm
+        shell: /bin/bash
+        password: $6$96jnCGgg4RLCWdzf$4Jym8Ieav1rLukXhIUQPKSGFTj6a9.9VZ3VkUZkeuW4ybn.4xlDwPcJmznux.XnoDnOEBd7OCn4aAi.DPVyIX/
+    - name: allow password less authentication
+      authorized_key:
+        user: ttytsdeur
+        key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFNNa5pCq5fRnZ7NIWfUowRCRG6gNUOAEJgfAMHckP67 Ansible my love"
+    - name: add user to sudoers
+      copy:
+        src: sudoer_ttytsdeur
+        dest: /etc/sudoers.d/ttytsdeur
+        group: root
+        owner: root
+        mode: 0440
