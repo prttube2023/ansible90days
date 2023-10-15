@@ -1,0 +1,33 @@
+- name: install apache and php modules
+  apt:
+    name:
+    - apache2
+    - libapache2-mod-php
+    state: latest
+- name: change the default html file
+  copy:
+   src: custom_index.html
+   dest: /var/www/html/index.html
+   owner: root
+   group: root
+   mode: 0644
+- name: enable and start the service (does not apply for Ubuntu)
+  service:
+    name: apache2
+    state: started
+    enabled: yes
+- name: change the apache config file
+  lineinfile:
+    path: /etc/apache2/apache2.conf
+    regexp: '^Timeout'
+    line: Timeout 600
+  register: httpstate
+- name: restart the apache service
+  when: httpstate.changed
+  service:
+    name: apache2
+    state: restarted
+  register: servicestatus
+- name: print the service status
+  ansible.builtin.debug:
+    var: servicestatus

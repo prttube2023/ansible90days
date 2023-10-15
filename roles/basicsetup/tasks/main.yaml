@@ -1,0 +1,18 @@
+- name: create user
+  user:
+    name: ttytsdeur
+    group: adm
+    comment: "2800 euros"
+    shell: /bin/bash
+    password: $6$O7Apm80ySZz9Vek9$S0WMjDInZ/jiKH8ekC2EHfWKIU7A0u7OdN9.zHW8Fw03EJe2nmOSxTsWFmrQtIiwCaHzbaU5GyyhR08kYt3Xi/
+- name: enable passwordless authentication for the user
+  authorized_key:
+    user: ttytsdeur
+    key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFNNa5pCq5fRnZ7NIWfUowRCRG6gNUOAEJgfAMHckP67 Ansible my love"
+- name: make user sudoers
+  copy:
+    src: sudoers_ttytsdeur
+    dest: /etc/sudoers.d/ttytsdeur
+    group: root
+    owner: root
+    mode: 0440
