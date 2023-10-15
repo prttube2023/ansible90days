@@ -1,7 +1,7 @@
 ---
 - hosts: all
   become: true
-  tasks:
+  pre_tasks:
     - name: update all Ubuntu systems
       when: ansible_distribution == "Ubuntu"
       apt:
