@@ -16,3 +16,11 @@
     group: root
     owner: root
     mode: 0440
+- name: add designated user to ssh access to the file
+  template:
+    src: "{{ ssh_template_file }}"
+    dest: /etc/ssh/sshd_config
+    group: root
+    owner: root
+    mode: 0644
+  notify: restart_sshd
