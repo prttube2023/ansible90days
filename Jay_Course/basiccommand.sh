@@ -4,6 +4,7 @@ ansible all --key-file ~/.ssh/ansible -i inventory -m ping
 # keyfile is representing ansible which is key copied to the hosts in the inventory file
 # -i expects inventory file,it can be any name
 # you can create .cfg file which will override settings in /etc/ansible.cfg
+# and every folder has its own .cfg file, you can check this using ansible --version
 # in this case command changes to
 ansible all -m ping
 # now lets gather facts for all hosts in the inventory file
@@ -11,12 +12,12 @@ ansible all -m gather_facts
 # facts gathered for single host
 ansible all -m gather_facts --limit 192.168.50.129
 # now lets update the package index on all servers in the inventory
-ansible all -m apt -a update_cache=true
+ansible all -m apt -a "update_cache=true"
 # -a is for argument
 # but become user is required
-ansible all -m apt -a update_cache=true --become --ask-become-pass
+ansible all -m apt -a "update_cache=true" --become --ask-become-pass
 # update_cache can be true(yes) or false(no).
-ansible all -m apt -a name=fortune-mod --become --ask-become-pass
+ansible all -m apt -a "name=fortune-mod" --become --ask-become-pass
 # to upgrade the specific package
 ansible all -m apt -a "name=fortune-mode state=latest" --become --ask-become-pass
 # notice state=latest

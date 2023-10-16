@@ -1,0 +1,29 @@
+---
+- name: first playbook 101
+  hosts: all
+  vars:
+    firstvar: "Lord Krishna"
+    checktruth: true
+    cities_to_visit:
+      - Vienna
+      - Venice
+      - Munich
+      - Berlin
+
+  tasks:
+    - name: First print a message
+      ansible.builtin.debug:
+        msg: "Miracle from {{ firstvar }}"
+      notify: reload
+    - name: checking condition
+      ansible.builtin.debug:
+        msg: "This NEWS is true"
+      when: checktruth
+    - name: Now try some loop - e.g. print cities
+      ansible.builtin.debug:
+        var: item
+      loop: "{{ cities_to_visit }}"
+  handlers:
+    - name: reload
+      ansible.builtin.debug:
+        msg: "NEWS has triggered"

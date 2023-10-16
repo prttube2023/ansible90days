@@ -1,5 +1,5 @@
 # this a version which uses variables and module name package instead of apt
-# this allow us to use this playbook on linux distribution
+# this allow us to use this playbook on any linux distribution
 ---
 - hosts: all
   become: true

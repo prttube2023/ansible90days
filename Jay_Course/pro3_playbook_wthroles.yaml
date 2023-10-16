@@ -1,4 +1,10 @@
 # Purpose: it is 3rd version of the playbook but based on the roles.
+# you need the following folders
+  # - roles
+      # under roles, the folder name should match the name of role e.g. basicsetup
+      # e.g. roles/basicsetup and roles/webservers
+      # under basicsetup folder you need tasks folder and under tasks folder main.yaml
+      # similarly for webservers folder.
 ---
 - hosts: all
   become: true
