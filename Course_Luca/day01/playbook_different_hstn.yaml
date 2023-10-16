@@ -1,0 +1,10 @@
+---
+- name: Ansible_hostname or inventory_hostname
+  hosts: all
+  tasks:
+    - name: print the hostname
+      ansible.builtin.debug:
+        var: ansible_hostname
+    - name: print the fqdn
+      ansible.builtin.debug:
+        var: ansible_fqdn

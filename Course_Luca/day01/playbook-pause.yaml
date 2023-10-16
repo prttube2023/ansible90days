@@ -1,0 +1,13 @@
+# pause module - sleep in all other programming langauge
+---
+- name: pause module demo
+  hosts: all
+  vars:
+    timetowait: 10
+  tasks:
+    - name: lets take a pause of {{ timetowait | int }} seconds
+      ansible.builtin.pause:
+        seconds: "{{ timetowait | int }}"
+    - name: wait time
+      ansible.builtin.debug:
+        msg: "The time to wait was {{ timetowait }} seconds"

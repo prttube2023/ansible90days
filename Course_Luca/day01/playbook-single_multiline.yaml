@@ -1,0 +1,32 @@
+# how to print single or multiple line
+- name: Print single or multiple line
+  hosts: all
+  vars:
+    var1: |
+      This is multiple lines,
+      normally used for Addresses.
+      And you might in
+      useful
+    var2: > 
+      This is single line,
+      what ever you do it is single line
+    var3: |-
+      Here it will be again multiple lines,
+      but you will not need new at the end of the line
+    var4: >-
+      here it will be
+      single line but no new 
+      line at the end.
+  tasks:
+    - name: print both the var1
+      ansible.builtin.debug:
+        msg: "{{ var1.split('\n') }}" # you are splitting the string here
+    - name: print var2
+      ansible.builtin.debug:
+        var: var2
+    - name: print var3
+      ansible.builtin.debug:
+        var: var3
+    - name: print var4
+      ansible.builtin.debug:
+        var: var4
