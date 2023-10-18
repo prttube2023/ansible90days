@@ -1,0 +1,19 @@
+# The commands will insert an exclamation point (!) mark in front of the encrypted password. 
+# When the password field in the /etc/shadow file contains an exclamation point, 
+# the user will not be able to login to the system using password authentication. 
+# Other login methods, like key-based authentication or switching 
+# to the user are still allowed. If you want to lock the account and 
+# disable all login methods, you also need to set the expiration date to 1.
+
+- name: lock the password for the user. Assuming user is preetam007
+  hosts: all
+  become: true
+  vars:
+    user_name: "preetam007"
+  tasks:
+    - name: lock password for the user "{{ user_name }}"
+      ansible.builtin.user:
+        user: "{{ user_name }}"
+        state: present
+        password_lock: true
+        shell: /sbin/nologin
