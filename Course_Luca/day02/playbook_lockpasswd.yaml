@@ -15,5 +15,7 @@
       ansible.builtin.user:
         user: "{{ user_name }}"
         state: present
-        password_lock: true
-        shell: /sbin/nologin
+        # password_lock: true
+        # shell: /sbin/nologin
+        password_lock: false
+        shell: /bin/bash
