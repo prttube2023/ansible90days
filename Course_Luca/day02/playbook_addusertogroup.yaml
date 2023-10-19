@@ -1,0 +1,21 @@
+# add user to a group actually append
+---
+- name: Add groups to the existing user
+  hosts: all
+  become: true
+  vars:
+    user_name: "preetam007"
+    group_names:
+      - games
+      - video
+  tasks:
+    - name: add group to an "{{ user_name }}"
+      ansible.builtin.user:
+        user: "{{ user_name }}"
+        groups: "{{ group_names }}"
+        append: yes
+
+# !!! append: yes will added, if you say no, it will replace !!! all groups.
+# how to check the group using commands
+# sudo groups username
+# sudo id username

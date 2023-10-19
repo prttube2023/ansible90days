@@ -1,0 +1,13 @@
+---
+- name: lock the password for the user. Assuming user is preetam007
+  hosts: all
+  become: true
+  vars:
+    user_name: "preetam007"
+  tasks:
+    - name: lock password for the user "{{ user_name }}"
+      ansible.builtin.user:
+        user: "{{ user_name }}"
+        password_expire_max: 90
+
+      

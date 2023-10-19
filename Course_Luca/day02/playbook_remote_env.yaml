@@ -1,0 +1,13 @@
+---
+- name: play with remote environment variable
+  hosts: all
+  environment:
+    USER_NAME: preetam
+  
+  tasks:
+    - name: lets print environment variable as part of play
+      ansible.builtin.command: "echo $USER_NAME"
+    - name: let print the enviroment variable within the task
+      ansible.builtin.command: "echo $USER_NAME"
+      environment:
+        USER_NAME: zare
