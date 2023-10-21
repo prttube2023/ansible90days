@@ -1,0 +1,59 @@
+---
+- name: Install and configure nginx server with self signed certificate
+  hosts: webservers
+  become: true
+  vars:
+    key_fi: nginx.key
+    crt_fi: nginx.crt
+    tls_dir: /etc/nginx/ssl/
+    cfg_fi: /etc/nginx/sites-available/default
+    server_name: localhost
+
+  tasks:
+    - name: Install nginx role
+      ansible.builtin.package:
+        update_cache: true
+        name: nginx
+      notify: Restart_nginx_svc
+
+    - name: Create tls directory
+      ansible.builtin.file:
+        path: "{{ tls_dir }}"
+        state: directory
+        mode: '0750'
+      notify: Restart_nginx_svc
+
+    - name: Copy cert and key
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "{{ tls_dir }}"
+        mode: '0600'
+      loop:
+        - "{{ key_fi }}"
+        - "{{ crt_fi }}"
+      notify: Restart_nginx_svc
+
+    - name: Config nginx.conf with tls info
+      ansible.builtin.template:
+        src: nginx.conf.j2
+        dest: "{{ cfg_fi }}"
+      notify: Restart_nginx_svc
+
+    - name: Enable configuration of nginx
+      ansible.builtin.file:
+        src: "{{ cfg_fi }}"
+        dest: /etc/nginx/sites-enabled/default
+        state: link
+
+    - name: Use my own index.html file
+      ansible.builtin.template:
+        src: index.html.j2
+        dest: /usr/share/nginx/html/index.html
+        mode: '0644'
+
+  handlers:
+    - name: Restart_nginx_svc
+      ansible.builtin.service:
+        name: nginx
+        state: restarted
+        enabled: true
