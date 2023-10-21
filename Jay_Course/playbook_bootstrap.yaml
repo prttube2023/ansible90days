@@ -1,5 +1,6 @@
 # Purpose: This is basically plain playbook to make server read for other roles.
   #   in other words, this playbook is valid for all servers irrespective of roles.
+  # a user with ttytsdeur is created but assigned ssh key with name ansible
 ---
 - hosts: all
   become: true

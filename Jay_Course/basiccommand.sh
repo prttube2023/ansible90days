@@ -27,3 +27,11 @@ ansible all -m apt -a "upgrade=dist" --become --ask-become-pass
 # run a playbook playbook_install_apache
 ansible-playbook -K playbook_install_apache.yaml
 # K (capital) --ask-become-pass
+ansible all -a "tail /var/log/syslog"
+ansible all -a "timedatectl"
+# you can replace 'all' with name of the host as well
+ansible nameoftheserver -b -a "reboot now"
+# remember '-b' is to become, i have not use -K because this user
+# has permission to sudo without password
+ansible webbie01 -b -m package -a "update_cache=true"
+# password cache index
