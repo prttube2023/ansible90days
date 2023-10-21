@@ -1,0 +1,27 @@
+---
+# Purpose: To boot strap a server with basic info e.g. user
+- name: To boot strap a server with basic info e.g. user
+  hosts: all
+  become: true
+  tasks:
+    - name: create a user ttytsdeur
+      ansible.builtin.user:
+        name: ttytsdeur
+        shell: /bin/bash
+        comment: Twenty eight
+        group: adm
+          
+        password: $6$MqndvJMbk6PNSWy4$Xp91NYo47OV5KIRFYPblw4Hu.8L.vtT.QXZbfBBmjd1ucvTpkxJCWUobGh9iq2CcnlGCpHX1LeM0DA2wFSd200
+    - name: copy public file for password less authentication
+      ansible.builtin.authorized_key:
+        user: ttytsdeur
+        key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFVYLoQDKqwrjntObuFzpTRa/32IjyUdbLTyy8lZ8U3T Ansible authentication"
+    - name: make ttytsdeur sudoers
+      ansible.builtin.copy:
+        src: sudoers_ttytsdeur
+        dest: /etc/sudoers.d/ttytsdeur
+        group: root
+        mode: 0440
+        owner: root  
+
+        
