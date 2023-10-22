@@ -1,0 +1,17 @@
+---
+- name: install crony (time server/client)
+  hosts: all
+  become: true
+
+  tasks:
+    - name: install chrony
+      ansible.builtin.package:
+        name: chrony
+        state: present
+        update_cache: true
+    - name: ensure chrony is up and running
+      ansible.builtin.service:
+        name: chrony
+        state: started
+        enabled: true
+    
