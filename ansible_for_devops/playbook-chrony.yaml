@@ -1,17 +1,32 @@
 ---
+<<<<<<< HEAD
 - name: install crony (time server/client)
+=======
+- name: Chrony, an NTP client/server
+>>>>>>> fc80725 (everything starting again)
   hosts: all
   become: true
 
   tasks:
+<<<<<<< HEAD
     - name: install chrony
+=======
+    - name: Install chrony
+>>>>>>> fc80725 (everything starting again)
       ansible.builtin.package:
         name: chrony
         state: present
         update_cache: true
+<<<<<<< HEAD
     - name: ensure chrony is up and running
+=======
+    - name: Ensure chrony is up and running
+>>>>>>> fc80725 (everything starting again)
       ansible.builtin.service:
         name: chrony
         state: started
         enabled: true
+<<<<<<< HEAD
     
+=======
+>>>>>>> fc80725 (everything starting again)

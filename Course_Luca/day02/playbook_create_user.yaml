@@ -2,11 +2,19 @@
   # - create ssh key ed25519
   # - create password using mkpasswd (mkpasswd -m HELP)
 ---
+<<<<<<< HEAD
 - name: create a user 
   hosts: all
   become: true
   tasks:
     - name: create a local user
+=======
+- name: Create a user
+  hosts: all
+  become: true
+  tasks:
+    - name: Create a local user
+>>>>>>> fc80725 (everything starting again)
       ansible.builtin.user:
         name: preetam007
         comment: "preetam zare"
@@ -22,4 +30,8 @@
 # double quotes does matter for the password fields
 # to remove the user
   # - state: absent
+<<<<<<< HEAD
   # - remove: true (to remove home directory)
+=======
+  # - remove: true (to remove home directory)
+>>>>>>> fc80725 (everything starting again)

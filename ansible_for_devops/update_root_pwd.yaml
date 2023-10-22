@@ -1,0 +1,19 @@
+# this unix socket is important. spent two hours on it.
+---
+- name: Update MariaDB root password
+  hosts: db_srvs
+  become: true
+  tasks:
+    - name: Change blank password of root
+      community.mysql.mysql_user:
+        name: root
+        password: "VMware1!2303"
+        priv: "*.*:ALL,GRANT"
+        login_user: root
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+        state: present
+    - name: Copy the cnf file with password
+      ansible.builtin.copy:
+        src: my.cnf
+        dest: /root/.my.cnf
+        mode: '0600'
