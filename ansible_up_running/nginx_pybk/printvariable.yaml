@@ -1,0 +1,11 @@
+# print variable
+---
+- name: We have to print variable
+  hosts: webservers
+  tasks:
+    - name: Capture login details in variable
+      ansible.builtin.command: whoami
+      register: login
+    - name: printing the login details
+      ansible.builtin.debug:
+        msg: "The name of the person is {{ login.stdout }}"
