@@ -1,0 +1,11 @@
+---
+- name: sample playbook
+  become: false
+  hosts: localhost
+  gather_facts: false
+  # now below line is important
+  collections:
+    - vmware.community
+  # when you write above line, you do not have to write
+  # full name of the community module e.g. vmware.community.vmware_guest_powerstate
+  
