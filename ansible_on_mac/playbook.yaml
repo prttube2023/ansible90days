@@ -1,0 +1,9 @@
+---
+- name: run something on mac
+  hosts: localhost
+  tasks:
+    - name: mac info gathering
+      debug:
+        msg: "this is best on mac"
+    - name: lets ping mac
+      ping:

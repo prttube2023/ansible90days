@@ -1,0 +1,14 @@
+---
+- name: simple looping
+  hosts: localhost
+  vars:
+    vmlist:
+      - appie
+      - debbie
+      - appie
+
+  tasks:
+    - name: Print VM name
+      debug:
+        msg: "{{ item }}"
+      loop: "{{ vmlist }}"

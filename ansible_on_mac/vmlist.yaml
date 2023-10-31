@@ -1,0 +1,5 @@
+#--user_data.yaml
+vm_names:
+  - alice
+  - debbie
+  - appie

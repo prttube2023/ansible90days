@@ -1,0 +1,14 @@
+---
+- name: looping a list in a file
+  hosts: localhost
+  vars_files:
+    - vmlist.yaml
+
+  tasks:
+    - name: read the item in the file
+      debug:
+        msg: "{{ item }}"
+      with_items: "{{ vm_names }}"
+
+# vm_names is a name of the list in a file e.g. for item in vm_names
+# reference: https://blog.learncodeonline.in/everything-about-ansible-loops
